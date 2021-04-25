@@ -1,8 +1,11 @@
 ---
 title: "Final Project"
 subtitle: "Data Science for Biologists, Spring 2021"
-author: "Your name goes here"
-output: html_document
+author: "Kevin Riedmuller"
+output:
+ html_document:
+   theme: cerulean
+   highlight: tango
 editor_options: 
   chunk_output_type: console
 ---
@@ -12,14 +15,18 @@ editor_options:
 knitr::opts_chunk$set(warning=FALSE, message=FALSE, echo = TRUE, include = TRUE)
 
 # Load all libraries you use HERE:
+library(tidyverse)
 ```
 
 <br><br>
 
 ## Introduction
+I have become more interested in government and politics recently and I think this will be a good opportunity to learn more about some government programs. The [US Kids Spending](https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-09-15/readme.md) data set includes spending data on children, by state, from the year 1997 to 2016. I chose this data because I think it will be really interesting to see how spending trends change over time and how spending on kids compares across different states. This data also includes what government programs the money is coming from such as SNAP or unemployment benefits. I am curious to see how much these government programs are providing relative to one another and how their contributions have also changed over time. 
 
 ```{r read-examine-data}
+kids <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-09-15/kids.csv')
 
+glimpse(kids)
 ```
 
 <br><br>
