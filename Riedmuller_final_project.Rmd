@@ -49,9 +49,10 @@ kids_nona %>% # pipe in dataset
   select(- raw, -inf_adj) %>% # remove unnecessary columns
   filter(variable == "SNAP", # filter for rows containing SNAP information
          state %in% northeast_region) %>% # filter for rows containing Northeast states 
+  mutate(perchild_dollars = inf_adj_perchild * 1000) %>% # make a column to transform per $1000 values to dollar values
   ggplot() + # add ggplot
   aes(x = year, # add year to x-axis
-      y = inf_adj_perchild, # add inflation adjusted amount per child to y-axis
+      y = perchild_dollars, # add inflation adjusted amount per child to y-axis
       color = state) + # map color to state
   geom_line() + # add lines
   scale_color_brewer(palette = "Paired") + # change color palette
