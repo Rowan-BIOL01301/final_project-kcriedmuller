@@ -1,7 +1,7 @@
 ---
 title: "Final Project"
 subtitle: "Data Science for Biologists, Spring 2021"
-author: "Kevin Riedmuller"
+author: "Kevin C. Riedmuller"
 output:
  html_document:
    theme: cerulean
@@ -33,20 +33,47 @@ glimpse(kids)
 
 ## Question 1
 
-#### REPLACE TEXT WITH YOUR QUESTION. Your question should literally be a level-4 header.
+#### How does SNAP benefit spending per child in New Jersey compare, over time, to other states in the Northeast after adjusting for inflation?
 
 ### Methods
+```{r question1_methods, fig.height = 5, fig.width = 7}
+kids %>% # pipe in dataset
+  drop_na() -> kids_nona # remove rows containing na and define variable
+
+# define variable containing all Northeast states
+northeast_region <- c("New Jersey", "Delaware", "Pennsylvania",
+                      "Maine", "New Hamphsire", "Vermont", "Massachusetts",
+                      "Rhode Island", "Connecticut") 
+
+kids_nona %>% # pipe in dataset
+  select(- raw, -inf_adj) %>% # remove unnecessary columns
+  filter(variable == "SNAP", # filter for rows containing SNAP information
+         state %in% northeast_region) %>% # filter for rows containing Northeast states 
+  ggplot() + # add ggplot
+  aes(x = year, # add year to x-axis
+      y = inf_adj_perchild, # add inflation adjusted amount per child to y-axis
+      color = state) + # map color to state
+  geom_line() + # add lines
+  scale_color_brewer(palette = "Paired") + # change color palette
+  theme_dark() + # add dark theme
+  theme(legend.position = "top") + # move legend to the top
+  scale_x_continuous(n.breaks = 19, # specify x-axis breaks
+                     guide = guide_axis(n.dodge = 2)) + # specify x-axis label locations
+  scale_y_continuous(labels = scales::dollar) + # change y-axis labels to dollar amounts
+  labs(y = "inflation adjusted SNAP spending per child", # change y-axis title
+       x = "year") # change x-axis title
+```
 
 ### Answer
 
-Replace this text with your answer to your question.
+From 1997 to about 2002, New Jersey only spent more per child in SNAP benefits than Massachusetts and about the same as Connecticut. From about 2003 to 2016, New Jersey spent the least amount on  SNAP benefits in the Northeast. **This dataset does not include SNAP spending for the state of New Hampshire.**
 
 
 <br><br>
 
 ## Question 2
 
-#### REPLACE TEXT WITH YOUR QUESTION. Your question should literally be a level-4 header.
+#### On average, which state spends the most money on parks and recreation services?
 
 ### Methods
 
