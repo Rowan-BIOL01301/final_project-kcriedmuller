@@ -42,7 +42,7 @@ kids %>% # pipe in dataset
 
 # define variable containing all Northeast states
 northeast_region <- c("New Jersey", "Delaware", "Pennsylvania",
-                      "Maine", "New Hamphsire", "Vermont", "Massachusetts",
+                      "Maine", "New Hampshire", "Vermont", "Massachusetts",
                       "Rhode Island", "Connecticut") 
 
 kids_nona %>% # pipe in dataset
@@ -66,20 +66,43 @@ kids_nona %>% # pipe in dataset
 
 ### Answer
 
-From 1997 to about 2002, New Jersey only spent more per child in SNAP benefits than Massachusetts and about the same as Connecticut. From about 2003 to 2016, New Jersey spent the least amount on  SNAP benefits in the Northeast. **This dataset does not include SNAP spending for the state of New Hampshire.**
+From 1997 to about 2002, New Jersey only spent more per child in SNAP benefits than Massachusetts and New Hampshire, and about the same as Connecticut. From about 2003 to 2016, New Jersey spent more in SNAP benefits per child than New Hampshire.
 
 
 <br><br>
 
 ## Question 2
 
-#### On average, which state spends the most money on parks and recreation services?
+#### On average, which Northeastern state spends the most money on parks and recreation services?
 
 ### Methods
+```{r question2_methods, fig.height = 4, fig.width = 7}
+kids_nona %>% # pipe in dataset
+  select(state, variable, inf_adj) %>% # select columns of interest
+  filter(variable == "parkrec", # filter rows for parks and recreation spending 
+         state %in% northeast_region) %>% # filter rows for Northeastern states
+  group_by(state) %>% # group by state
+  summarize(mean_parkrec = mean(inf_adj)) %>% # create a column of average parks and rec spending by state
+  ungroup() %>% # ungroup data
+  ggplot() + # add ggplot
+  aes(x = fct_reorder(state,mean_parkrec, .desc = TRUE), # add variable to x-axis and arrange in descending order of y-axis values
+      y = mean_parkrec) + # add variable to y-axis
+  geom_col(color = "black", # add bars and specify color 
+             fill = "forestgreen") + # specify fill
+  geom_text(aes(label = mean_parkrec), # display bar values
+            vjust = -.5, # adjust bar label height
+            size = 3, # adjust bar label size
+            parse = TRUE) + # adjust bar label decimal points to fit label neatly within bar width
+  scale_y_continuous(labels = scales::dollar) + # change y-axis labels to dollar amounts
+  scale_x_discrete(guide = guide_axis(n.dodge = 2)) + # stagger x-axis labels
+  theme_linedraw() + # add linedraw theme
+  labs(y = "average parks and recreation spending", # change y-axis label
+       x = "state") # change x-axis label
+```
 
 ### Answer
 
-Replace this text with your answer to your question.
+New Jersey spends the most money, on average, for parks and recreation services in the Northeast.
 
 <br><br>
 
