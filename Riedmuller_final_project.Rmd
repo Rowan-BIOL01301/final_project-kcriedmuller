@@ -86,7 +86,7 @@ kids_nona %>% # pipe in dataset
   summarize(mean_parkrec = mean(inf_adj)) %>% # create a column of average parks and rec spending by state
   ungroup() %>% # ungroup data
   ggplot() + # add ggplot
-  aes(x = fct_reorder(state,mean_parkrec, .desc = TRUE), # add variable to x-axis and arrange in descending order of y-axis values
+  aes(x = fct_reorder(state, mean_parkrec, .desc = TRUE), # add variable to x-axis and arrange in descending order of y-axis values
       y = mean_parkrec) + # add variable to y-axis
   geom_col(color = "black", # add bars and specify color 
              fill = "forestgreen") + # specify fill
@@ -140,10 +140,47 @@ New Jersey steadily increased Pell grant spending from 1997 to it's highest peak
 
 ## Question 4
 
-#### REPLACE TEXT WITH YOUR QUESTION. Your question should literally be a level-4 header.
+#### Which state in the Northeast spent the most on healthcare services collectively per child during the year of 2016?
 
 ### Methods
+```{r question4_methods, fig.height = 4, fig.width = 6.5}
+# define variable containing healthcare services
+healthcare <- c("Medicaid_CHIP", "other_health", "pubhealth")
+
+# define variable containing target year
+target_year <- 2016
+
+kids_nona %>% # pipe in dataset
+  select(-raw, -inf_adj) %>% # remove unnecessary rows
+  filter(state %in% northeast_region, # filter rows for northeast states
+         variable %in% healthcare, # filter rows for healthcare services
+         year == target_year) %>% # filter rows for the year 2016
+  group_by(state) %>% # group by state
+  mutate(health_total = sum(inf_adj_perchild)) %>% # make a column that totals per child healthcare spending 
+  distinct(health_total) %>% # remove duplicate healthcare total outputs
+  mutate(health_total_dollar = health_total*1000) %>% # make a column to transform per $1000 values to dollar values
+  ungroup() %>% # ungroup data
+  ggplot() + # add ggplot
+  geom_segment(aes(x = fct_reorder(state, health_total_dollar, .desc = TRUE), # and lines in descending order and specify where line starts on x-axis
+                   y = 0, # specify where line starts on y-axis
+                   xend = state, # specify where line ends on x-axis
+                   yend = health_total_dollar), # specify where line ends on y-axis
+               size = 1, # specify line size
+               color = "palevioletred") + # specify line color
+  geom_point(aes(x = state, # add variable to x-axis
+                 y = health_total_dollar), # add variable to y-axis
+             size = 3, # specify point size
+             color = "palevioletred4") + # specify point color
+  scale_y_continuous(n.breaks = 8, # specify number of breaks on y-axis
+                     labels = scales::dollar) + # change y-axis labels to dollar amounts
+  scale_x_discrete(guide = guide_axis(n.dodge = 2)) + # stagger x-axis labels
+  theme_classic() + # add classic theme
+  theme(panel.background = element_rect(fill = "lavender")) + # specify background fill
+  labs(x = "state", # change x-axis label
+       y = "total healthcare spending per child") # change y-axis label
+
+```
 
 ### Answer
 
-Replace this text with your answer to your question.
+At nearly $14,000 per child, Massachusetts and Vermont spent the most on healthcare services in the Northeast in 2016.
