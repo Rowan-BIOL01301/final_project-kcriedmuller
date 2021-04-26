@@ -43,7 +43,7 @@ kids %>% # pipe in dataset
 # define variable containing all Northeast states
 northeast_region <- c("New Jersey", "Delaware", "Pennsylvania",
                       "Maine", "New Hampshire", "Vermont", "Massachusetts",
-                      "Rhode Island", "Connecticut") 
+                      "Rhode Island", "Connecticut", "New York") 
 
 kids_nona %>% # pipe in dataset
   select(- raw, -inf_adj) %>% # remove unnecessary columns
@@ -74,7 +74,7 @@ From 1997 to about 2002, New Jersey only spent more per child in SNAP benefits t
 
 ## Question 2
 
-#### On average, which Northeastern state spends the most money on parks and recreation services?
+#### On average, which Northeastern state spends the most money on parks and recreation services after adjusting for inflation?
 
 ### Methods
 ```{r question2_methods, fig.height = 4, fig.width = 7}
@@ -103,7 +103,7 @@ kids_nona %>% # pipe in dataset
 
 ### Answer
 
-New Jersey spends the most money, on average, for parks and recreation services in the Northeast.
+New York spends the most money on average for parks and recreation services in the Northeast after adjusting for inflation.
 
 <br><br>
 
@@ -183,4 +183,4 @@ kids_nona %>% # pipe in dataset
 
 ### Answer
 
-At nearly $14,000 per child, Massachusetts and Vermont spent the most on healthcare services in the Northeast in 2016.
+At nearly $17,500 per child, New York spent the most on healthcare services in the Northeast in 2016.
