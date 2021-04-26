@@ -67,7 +67,7 @@ kids_nona %>% # pipe in dataset
 
 ### Answer
 
-From 1997 to about 2002, New Jersey only spent more per child in SNAP benefits than Massachusetts and New Hampshire, and about the same as Connecticut. From about 2003 to 2016, New Jersey spent more in SNAP benefits per child than New Hampshire.
+From 1997 to about 2002, New Jersey only spent more per child in SNAP benefits than Massachusetts and New Hampshire, and about the same as Connecticut. From about 2003 to 2016, New Jersey only spent more in SNAP benefits per child than New Hampshire.
 
 
 <br><br>
@@ -109,13 +109,31 @@ New Jersey spends the most money, on average, for parks and recreation services 
 
 ## Question 3
 
-#### REPLACE TEXT WITH YOUR QUESTION. Your question should literally be a level-4 header.
+#### How has spending on Pell grants in New Jersey changed over time?
 
 ### Methods
+```{r question3_methods, fig.height = 3.5, fig.width = 7}
+kids_nona %>% # pipe in dataset
+  select(state, variable, year, inf_adj) %>% # select column of interest
+  filter(state == "New Jersey", # filter rows for New Jersey
+         variable == "pell") %>% # filter rows for pell grant spending 
+  ggplot() + # add ggplot
+  aes(x = year, # add year to x-axis
+      y = inf_adj) + # add inflation adjusted spening to y-axis
+  geom_line(color = "olivedrab", # add a line and specify color 
+            size = 0.8) + # specify line size
+  geom_point(color = "olivedrab", # add points and specify color
+             size = 2) + # specify point size
+  scale_y_continuous(labels = scales::dollar) + # change y-axis labels to dollar amounts
+  theme_bw() + # add bw theme
+  labs(y = "New Jersey Pell grant spending") + # change y-axis label
+  theme(panel.background = element_rect(fill = "slategray2")) + # change background fill 
+   scale_x_continuous(n.breaks = 7) # specify x-axis breaks
+```
 
 ### Answer
 
-Replace this text with your answer to your question.
+New Jersey steadily increased Pell grant spending from 1997 to it's highest peak of about $880,000 in 2010, with slight decreases from 2003 to 2005. There was a decline in Pell grant spending from 2010 to 2016.
 
 
 <br><br>
