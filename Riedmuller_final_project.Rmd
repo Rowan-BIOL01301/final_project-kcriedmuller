@@ -133,7 +133,7 @@ kids_nona %>% # pipe in dataset
 
 ### Answer
 
-New Jersey steadily increased Pell grant spending from 1997 to it's highest peak of about $880,000 in 2010, with slight decreases from 2003 to 2005. There was a decline in Pell grant spending from 2010 to 2016.
+New Jersey steadily increased Pell grant spending from 1997 to it's highest peak of about $880,000 in 2010, with only slight decreases from 2003 to 2005. There was a decline in Pell grant spending from 2010 to 2016.
 
 
 <br><br>
