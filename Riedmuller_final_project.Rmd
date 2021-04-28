@@ -119,7 +119,7 @@ kids_nona %>% # pipe in dataset
          variable == "pell") %>% # filter rows for pell grant spending 
   ggplot() + # add ggplot
   aes(x = year, # add year to x-axis
-      y = inf_adj) + # add inflation adjusted spening to y-axis
+      y = inf_adj) + # add inflation adjusted spending to y-axis
   geom_line(color = "olivedrab", # add a line and specify color 
             size = 0.8) + # specify line size
   geom_point(color = "olivedrab", # add points and specify color
