@@ -84,16 +84,16 @@ kids_nona %>% # pipe in dataset
          state %in% northeast_region) %>% # filter rows for Northeastern states
   group_by(state) %>% # group by state
   summarize(mean_parkrec = mean(inf_adj)) %>% # create a column of average parks and rec spending by state
+  mutate(mean_parkrec0 = round(mean_parkrec, 0)) %>% # create column of average parks and rec spending without decimal points
   ungroup() %>% # ungroup data
   ggplot() + # add ggplot
-  aes(x = fct_reorder(state, mean_parkrec, .desc = TRUE), # add variable to x-axis and arrange in descending order of y-axis values
-      y = mean_parkrec) + # add variable to y-axis
+  aes(x = fct_reorder(state, mean_parkrec0, .desc = TRUE), # add variable to x-axis and arrange in descending order of y-axis values
+      y = mean_parkrec0) + # add variable to y-axis
   geom_col(color = "black", # add bars and specify color 
              fill = "forestgreen") + # specify fill
-  geom_text(aes(label = mean_parkrec), # display bar values
+  geom_text(aes(label = mean_parkrec0), # display bar values
             vjust = -.5, # adjust bar label height
-            size = 3, # adjust bar label size
-            parse = TRUE) + # adjust bar label decimal points to fit label neatly within bar width
+            size = 3) + # adjust bar label size
   scale_y_continuous(labels = scales::dollar) + # change y-axis labels to dollar amounts
   scale_x_discrete(guide = guide_axis(n.dodge = 2)) + # stagger x-axis labels
   theme_linedraw() + # add linedraw theme
